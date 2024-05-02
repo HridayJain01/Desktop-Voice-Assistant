@@ -72,7 +72,7 @@ def open_gui():
     def send_email_from_gui():
         receiver_emails = receiver_email_entry.get().split(",")  # Split receiver emails by comma
         subject = subject_entry.get()
-        custom_h1 = h1_entry.get()  
+        custom_h1 = h1_entry.get()
         send_email(receiver_emails, subject, custom_h1)
         root.destroy()
 
