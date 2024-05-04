@@ -187,8 +187,9 @@ def say(text):
 
 
 def reply(text):
+
     response_label = st.empty()
-    response_label.write(f"Jarvis: {text}")
+    response_label.write(f"Jarvis: {text.capitalize()}")
     say(text)
 
 
@@ -216,7 +217,8 @@ def takeCommand():
                 result = recognizer.Result()
                 query = result[14:-3]
                 if query:
-                    st.write("User said:", query)
+                    usercommand=query.capitalize()
+                    st.write("User said:", usercommand, font="Arial 20")
                     return query.lower()
                 else:
                     st.error("Sorry, I couldn't recognize what you said.")
@@ -239,7 +241,7 @@ def send_whatsapp_message(pnumber, message):
     webbrowser.open("https://wa.me/" + pnumber + "?text=" + encoded_message)
 
 
-def handle_voice_command(logdat):
+def handle_voice_command(logdat, voice_command_checked):
     global subprocess
     query = takeCommand()
     if query != "Some Error Occurred. Sorry from Jarvis":
@@ -248,7 +250,7 @@ def handle_voice_command(logdat):
 
     stream.stop_stream()
     ###time.sleep(2)
-    defaulthandler(logdat, query)
+    defaulthandler(logdat, query, voice_command_checked)
 
 
 def handle_text_command(logdat, query):
@@ -256,7 +258,7 @@ def handle_text_command(logdat, query):
     defaulthandler(logdat, query)
 
 
-def defaulthandler(logdat, query):
+def defaulthandler(logdat, query, voice_command_checked):
     sites = [
         ["youtube", "https://youtube.com"],
         ["wikipedia", "https://wikipedia.org"],
@@ -282,6 +284,10 @@ def defaulthandler(logdat, query):
 
     if "play" in query:
         reply("Do you want it in youtube or spotify")
+        st.write("Listening...")
+
+        st.error("Sorry i couldn't understand what you said")
+        st.write("Playing on youtube by default")
 
 
         deletethese = ["on+youtube+for", "on+youtube", "youtube+for", "play", "youtube"]
@@ -317,12 +323,15 @@ def defaulthandler(logdat, query):
             webbrowser.open("https://google.com/search?q=" + queryedit)
 
     if "what is" in query:
-        query = query.replace("what is ", "")
-        query = query.replace(" + ", " plus ")
-        st.write(query)
-        deletethese = ["", ""]
-        queryedit = searchedit(query, deletethese)
-        webbrowser.open("https://google.com/search?q=" + queryedit)
+        if "time" in query:
+            pass
+        else:
+            query = query.replace("what is ", "")
+            query = query.replace(" + ", " plus ")
+            st.write(query)
+            deletethese = ["", ""]
+            queryedit = searchedit(query, deletethese)
+            webbrowser.open("https://google.com/search?q=" + queryedit)
 
     if "queries" in query:
         qlist = retrieve_bottom_10_queries(logdat)
@@ -527,23 +536,24 @@ def defaulthandler(logdat, query):
                             if msg != "Some Error Occurred. Sorry from Jarvis":
                                 send_whatsapp_message(pnumber, msg)
                                 break
-    if "open a file" in query:
-        while "open a file" in query:
-            st.write("Which file do you want to open:")
-            fcommand = takeCommand()
-
-            if fcommand != "Some Error Occurred. Sorry from Jarvis":
-                filename = extract_filename_from_desktop(fcommand)
-                if filename:
-                    st.write("Found file:", filename)
-                    os.system(f"open {filename}")
-                    break
-                else:
-                    st.write("No matching file found on the desktop.")
-                    break
+    if "open" in query:
+        if "file" in query:
+            while "file" in query:
+                st.write("Which file do you want to open:")
+                fcommand = takeCommand()
+                if fcommand != "Some Error Occurred. Sorry from Jarvis":
+                    filename = extract_filename_from_desktop(fcommand)
+                    if filename:
+                        st.write("Found file:", filename)
+                        os.system(f"open {filename}")
+                        break
+                    else:
+                        st.write("No matching file found on the desktop.")
+                        break
 
     if "hello" in query:
         reply("Hello Sir")
+
 
     stream.start_stream()
 
@@ -561,7 +571,7 @@ def main():
 
     voice_command_checked = st.toggle("Voice Command")
     while voice_command_checked:
-        handle_voice_command(logdat)
+        handle_voice_command(logdat, voice_command_checked)
 
     run_query = st.text_input("Enter your Command:")
 

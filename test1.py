@@ -5,7 +5,6 @@ import speech_recognition as sr
 import os
 import webbrowser
 import datetime
-
 from bs4 import BeautifulSoup
 from googlesearch import search
 from youtube_search import YoutubeSearch
