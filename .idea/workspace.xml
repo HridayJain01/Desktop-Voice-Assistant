@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="08fffb19-88e2-40e4-a923-1dd2c42a25fe" name="Changes" comment="" />
+    <list default="true" id="08fffb19-88e2-40e4-a923-1dd2c42a25fe" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/insta.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +49,7 @@
     &quot;Python.emailq.executor&quot;: &quot;Run&quot;,
     &quot;Python.files.executor&quot;: &quot;Run&quot;,
     &quot;Python.finaldb.executor&quot;: &quot;Run&quot;,
+    &quot;Python.insta.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.merge.executor&quot;: &quot;Run&quot;,
     &quot;Python.news.executor&quot;: &quot;Run&quot;,
